@@ -12,7 +12,17 @@ import {WebsocketProvider} from 'y-websocket'
 import './Editor.css'
 
 const ydoc = new Y.Doc()
-const provider = new WebsocketProvider('wss://demos.yjs.dev', 'tiptap-collab-demo', ydoc)
+const provider = new WebsocketProvider('wss://demos.yjs.dev', 'ws/tiptap-collab-demo', ydoc)
+
+provider.on('status', (e) => {
+    console.log('ws status:', e.status) // connected / disconnected
+})
+provider.on('connection-close', (e) => {
+    console.log('ws closed:', e) // тут часто виден код/причина
+})
+provider.on('connection-error', (e) => {
+    console.log('ws error:', e)
+})
 
 
 let initialContent = '<p>Привет, мир! Это Tiptap ✨</p>'
@@ -88,7 +98,7 @@ export default function Editor(props, context) {
 
     return (
         <div className="editor-container">
-            <h1>📝 Мой Tiptap редактор</h1>
+            <h1>📝 Tiptap редактор на React</h1>
             <Toolbar editor={editor}/>
             <EditorContent editor={editor}/>
         </div>
