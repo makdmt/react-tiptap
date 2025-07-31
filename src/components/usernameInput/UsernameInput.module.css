@@ -1,0 +1,29 @@
+.usernameInputContainer {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.usernameInputContainer input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.usernameInputContainer input:focus {
+    border: 0;
+    outline: 1px solid #1677ff;
+}
+
+.usernameInputContainer button {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.usernameInputContainer button:focus {
+    border: 0;
+    outline: 1px solid #1677ff;
+}

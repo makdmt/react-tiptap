@@ -51,7 +51,7 @@ export default function Editor(props, context) {
             CollaborationCursor.configure({
                 provider: provider,
                 user: {
-                    name: 'Пользователь ' + Math.floor(Math.random() * 100),
+                    name: 'Пользователь ' + props.username,
                     color: '#' + Math.floor(Math.random() * 16777215).toString(16),
                 },
             }),
