@@ -1,17 +1,30 @@
 import {useEditor, EditorContent} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Toolbar from "../toolbar/Toolbar.jsx";
+import Toolbar from "../toolbar/Toolbar.jsx"
 import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
+import Collaboration from '@tiptap/extension-collaboration'
+import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+import * as Y from 'yjs'
+import {WebsocketProvider} from 'y-websocket'
+
+
 import './Editor.css'
+
+const ydoc = new Y.Doc()
+const provider = new WebsocketProvider('wss://demos.yjs.dev', 'tiptap-collab-demo', ydoc)
+
 
 let initialContent = '<p>Привет, мир! Это Tiptap ✨</p>'
 
 
 export default function Editor(props, context) {
+
     const editor = useEditor({
         extensions: [
-            StarterKit,
+            StarterKit.configure({
+                history: false, // важно: отключить встроенную историю, иначе конфликт
+            }),
             TextAlign.configure({
                 types: ['heading', 'paragraph', 'listItem']
             }),
@@ -30,6 +43,16 @@ export default function Editor(props, context) {
                     } catch {
                         return false
                     }
+                },
+            }),
+            Collaboration.configure({
+                document: ydoc,
+            }),
+            CollaborationCursor.configure({
+                provider: provider,
+                user: {
+                    name: 'Пользователь ' + Math.floor(Math.random() * 100),
+                    color: '#' + Math.floor(Math.random() * 16777215).toString(16),
                 },
             }),
         ],
@@ -54,6 +77,13 @@ export default function Editor(props, context) {
     //
     //     }
     // }, [editor])
+
+    // useEffect(() => {
+    //     return () => {
+    //         ydoc?.destroy();
+    //         editor?.destroy();
+    //     }
+    // }, [])
 
 
     return (
