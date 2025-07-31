@@ -24,6 +24,32 @@ export default function Toolbar({editor}) {
         }
     }, [editor])
 
+    const setLink = () => {
+        const prev = editor.getAttributes('link').href
+        const input = window.prompt('Введите URL', prev || 'https://')
+        if (input === null) return
+
+        // Пустая строка — снимаем ссылку
+        if (input.trim() === '') {
+            editor.chain().focus().extendMarkRange('link').unsetLink().run()
+            return
+        }
+
+        // Добавим протокол, если не указан
+        const href = /^(https?:)?\/\//i.test(input) ? input : `https://${input}`
+
+        editor
+            .chain()
+            .focus()
+            .extendMarkRange('link')
+            .setLink({ href })
+            .run()
+    }
+
+    const unsetLink = () => {
+        editor.chain().focus().extendMarkRange('link').unsetLink().run()
+    }
+
 
     if (!editor) {
         return null
@@ -67,6 +93,14 @@ export default function Toolbar({editor}) {
             >
                 1. List
             </button>
+            <button
+                onClick={setLink}
+                className={editor.isActive('link') ? 'is-active' : ''}
+                title="Создать/изменить ссылку"
+            >
+                Link
+            </button>
+            <button onClick={unsetLink} title="Убрать ссылку">Unlink</button>
             <button onClick={() => editor.chain().focus().undo().run()}>Undo</button>
             <button onClick={() => editor.chain().focus().redo().run()}>Redo</button>
         </div>
