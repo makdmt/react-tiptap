@@ -1,4 +1,4 @@
-import './toolbar.css'
+import './Toolbar.css'
 import {useState, useEffect} from "react";
 
 export default function Toolbar({editor}) {

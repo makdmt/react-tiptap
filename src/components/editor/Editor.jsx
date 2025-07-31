@@ -1,12 +1,15 @@
 import {useEditor, EditorContent} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Toolbar from "../toolbar/Toolbar.jsx";
+import './Editor.css'
+
+let initialContent = '<p>Привет, мир! Это Tiptap ✨</p>'
 
 
 export default function Editor(props, context) {
     const editor = useEditor({
         extensions: [StarterKit],
-        content: '<p>Привет, мир! Это Tiptap на React + Vite ✨</p>',
+        content: initialContent,
         onUpdate: ({editor}) => {
             const json = editor.getJSON();
         }
@@ -14,12 +17,20 @@ export default function Editor(props, context) {
 
     // useEffect(() => {
     //     if (editor) {
-    //         const saved = localStorage.getItem('editorContent')
+    //
+    //         const saved = localStorage.getItem('editorContent');
+    //
     //         if (saved) {
-    //             editor.commands.setContent(JSON.parse(saved))
+    //             try {
+    //                 initialContent = raw ? JSON.parse(raw) : initialContent
+    //             } catch {
+    //                 // если в localStorage лежит HTML-строка, оставим initialContent по умолчанию
+    //             }
     //         }
+    //
     //     }
     // }, [editor])
+
 
     return (
         <div className="editor-container">
