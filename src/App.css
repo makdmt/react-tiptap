@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+.ProseMirror {
+  min-height: 200px;
+  outline: none;
+}

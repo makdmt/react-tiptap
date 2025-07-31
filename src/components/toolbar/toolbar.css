@@ -1,0 +1,21 @@
+.menu-bar {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.menu-bar button {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.menu-bar button.is-active {
+    background: #333;
+    color: white;
+    border-color: #333;
+}
