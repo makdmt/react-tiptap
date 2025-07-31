@@ -12,14 +12,14 @@ export default function Toolbar({editor}) {
         editor.on('selectionUpdate', rerender)
         // editor.on('transaction', rerender)
         // editor.on('update', rerender)
-        // editor.on('focus', rerender)
+        editor.on('focus', rerender)
         // editor.on('blur', rerender)
 
         return () => {
             editor.off('selectionUpdate', rerender)
             // editor.off('transaction', rerender)
             // editor.off('update', rerender)
-            // editor.off('focus', rerender)
+            editor.off('focus', rerender)
             // editor.off('blur', rerender)
         }
     }, [editor])
@@ -42,7 +42,7 @@ export default function Toolbar({editor}) {
             .chain()
             .focus()
             .extendMarkRange('link')
-            .setLink({ href })
+            .setLink({href})
             .run()
     }
 
@@ -99,6 +99,35 @@ export default function Toolbar({editor}) {
                 title="Создать/изменить ссылку"
             >
                 Link
+            </button>
+            <button
+                onClick={() => editor.chain().focus().setTextAlign('left').run()}
+                className={editor.isActive({textAlign: 'left'}) ? 'is-active' : ''}
+                title="Выровнять по левому краю"
+            >
+                Left
+            </button>
+            <button
+                onClick={() => editor.chain().focus().setTextAlign('center').run()}
+                className={editor.isActive({textAlign: 'center'}) ? 'is-active' : ''}
+                title="По центру"
+            >
+                Center
+            </button>
+            <button
+                onClick={() => editor.chain().focus().setTextAlign('right').run()}
+                className={editor.isActive({textAlign: 'right'}) ? 'is-active' : ''}
+                title="По правому краю"
+            >
+                Right
+            </button>
+
+            <button
+                onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+                className={editor.isActive({textAlign: 'justify'}) ? 'is-active' : ''}
+                title="По ширине"
+            >
+                Justify
             </button>
             <button onClick={unsetLink} title="Убрать ссылку">Unlink</button>
             <button onClick={() => editor.chain().focus().undo().run()}>Undo</button>
